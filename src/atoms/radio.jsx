@@ -16,14 +16,12 @@ export default function RadioButtonsGroup() {
 
   return (
     <FormControl component="fieldset">
+      {console.log('radio value', value)}
       <FormLabel component="legend">Gender</FormLabel>
       <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
-          {array.map((value, index)=>
-          <FormControlLabel value={value} control={<Radio />} label={value} />)}
-        {/* <FormControlLabel value="female" control={<Radio />} label="Female" />
-        <FormControlLabel value="male" control={<Radio />} label="Male" />
-        <FormControlLabel value="other" control={<Radio />} label="Other" />
-        <FormControlLabel value="disabled" disabled control={<Radio />} label="(Disabled option)" /> */}
+        {array.map((value, index)=>
+        <FormControlLabel value={value} control={<Radio />} label={value} />)}
+        {/*<FormControlLabel value="disabled" disabled control={<Radio />} label="(Disabled option)" /> */}
       </RadioGroup>
     </FormControl>
   );

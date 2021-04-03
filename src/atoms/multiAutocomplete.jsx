@@ -1,71 +1,42 @@
 /* eslint-disable no-use-before-define */
 import React from 'react';
 import Chip from '@material-ui/core/Chip';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: 500,
-    '& > * + *': {
-      marginTop: theme.spacing(3),
-    },
-  },
-}));
-
-export default function Tags() {
-  const classes = useStyles();
+export default function FixedTags() {
+  const fixedOptions = [];
+  const [value, setValue] = React.useState([...fixedOptions]);
 
   return (
-    <div className={classes.root}>
-      <Autocomplete
-        multiple
-        id="tags-standard"
-        options={top100Films}
-        getOptionLabel={(option) => option.title}
-        defaultValue={[top100Films[13]]}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            variant="standard"
-            label="Multiple values"
-            placeholder="Favorites"
+    <Autocomplete
+      multiple
+      id="fixed-tags-demo"
+      value={value}
+      onChange={(event, newValue) => {
+        setValue([
+          ...fixedOptions,
+          ...newValue.filter((option) => fixedOptions.indexOf(option) === -1),
+        ]);
+      }}
+      options={top100Films}
+      getOptionLabel={(option) => option.title}
+      renderTags={(tagValue, getTagProps) =>
+        tagValue.map((option, index) => (
+          <Chip
+            label={option.title}
+            {...getTagProps({ index })}
+            disabled={fixedOptions.indexOf(option) !== -1}
           />
-        )}
-      />
-      <Autocomplete
-        multiple
-        id="tags-outlined"
-        options={top100Films}
-        getOptionLabel={(option) => option.title}
-        defaultValue={[top100Films[13]]}
-        filterSelectedOptions
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            variant="outlined"
-            label="filterSelectedOptions"
-            placeholder="Favorites"
-          />
-        )}
-      />
-      <Autocomplete
-        multiple
-        id="tags-filled"
-        options={top100Films.map((option) => option.title)}
-        defaultValue={[top100Films[13].title]}
-        freeSolo
-        renderTags={(value, getTagProps) =>
-          value.map((option, index) => (
-            <Chip variant="outlined" label={option} {...getTagProps({ index })} />
-          ))
-        }
-        renderInput={(params) => (
-          <TextField {...params} variant="filled" label="freeSolo" placeholder="Favorites" />
-        )}
-      />
-    </div>
+        ))
+      }
+      style={{ width: 500 }}
+      renderInput={(params) => (
+        <TextField {...params} label="Fixed tag" variant="outlined" placeholder="Favorites" />
+      )}
+    >
+        {console.log('autocomplete value' ,value)}
+    </Autocomplete>
   );
 }
 
