@@ -4,17 +4,17 @@ export function createStateFramework(productArray) {
   const formAnswers = {
     town: "", // Town/Area (Dropdown single value)
     pharmacyName: "",
-    products: [],
+    products: {},
   };
 
   productArray.forEach((productName) => {
-    formAnswers.products.push({
-      name: productName,
+    formAnswers.products[productName] = {
       available: false,
-      otcAvailability: 0,
-      presciptionAvailability: 0,
-      presciptionAvailabilitySources: [],
-    });
+      availability: 0,
+      otcMovement: 0,
+      presciptionMovement: 0,
+      presciptionMovementSources: [],
+    };
   });
 
   return formAnswers;
